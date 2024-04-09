@@ -1,0 +1,274 @@
+@import url("https://fonts.googleapis.com/css?family=Google+Sans:100,300,400,500,700,900,100i,300i,400i,500i,700i,900i%5D%5B2");
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Google Sans", sans-serif;
+}
+
+.app {
+  display: flex;
+}
+
+.sidebar {
+  width: 4.25rem;
+  height: 100vh;
+  transition: 0.5s;
+}
+
+.sidebar.active {
+  width: 17rem;
+}
+
+.mainPage {
+  padding: 1rem;
+  width: 100%;
+  max-height: 100vh;
+  overflow-x: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.googleAuth {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* gap: 10rem; */
+  height: 100vh;
+}
+
+.googleAuthFooter {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.googleAuthFooter p {
+  font-size: 0.82rem;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+}
+
+.googleAuthFooter button {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0.75rem 1.2rem;
+  border-radius: 4px;
+  transition: 0.2s ease-in;
+}
+
+.text-gradient {
+  background: linear-gradient(
+    90deg,
+    rgba(138, 118, 211, 1) 0%,
+    rgba(185, 108, 159, 1) 39%,
+    rgba(214, 101, 116, 1) 86%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.card {
+  width: 13rem;
+  height: 12.5rem;
+  border-radius: 1rem;
+  cursor: pointer;
+  position: relative;
+}
+
+.card p {
+  width: 11rem;
+  height: 10rem;
+  padding: 0.7rem;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.cardIcon {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  font-size: 1.4rem;
+  padding: 0.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.starterCard {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.promptInput {
+  width: 55%;
+  padding: 0.7rem 1.5rem;
+  position: absolute;
+  bottom: 3rem;
+  border-radius: 50px;
+}
+
+.promptInput input {
+  width: 95%;
+  padding: 0.7rem 0;
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
+.promptInput input::placeholder {
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.lightPlaceholder::placeholder {
+  color: #bfbebe;
+}
+
+.darkPlaceholder::placeholder {
+  color: #787676;
+}
+
+.termAndConditions {
+  position: absolute;
+  bottom: 1rem;
+  left: 28rem;
+  font-size: 0.75rem;
+  font-weight: 450;
+  color: #acaaaa;
+}
+
+.termAndCondition {
+  overflow: hidden; /* Hide default scrollbar */
+}
+
+/* Custom scrollbar */
+.termAndCondition::-webkit-scrollbar {
+  width: 10px;
+}
+
+.termAndCondition::-webkit-scrollbar-thumb {
+  background: #757575;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.promptAnswer {
+  width: 100%;
+  height: 70vh;
+  overflow-y: scroll;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.promptContent {
+  width: 55%;
+  padding: 2rem;
+  border-radius: 2rem;
+}
+
+.promptQuery{
+  width: 56%;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.promptAnswer::-webkit-scrollbar {
+  width: 8px;
+}
+
+.promptAnswer::-webkit-scrollbar-thumb {
+  background: #757575;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.manageGoogleAccountBtn {
+  width: 15rem;
+  height: 2.7rem;
+  background-color: transparent;
+  border-radius: 3rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.1s ease-in-out;
+}
+
+.manageGoogleAccountBtn a {
+  text-decoration: none;
+}
+
+.headerTermsBtn {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0.75rem 1.2rem;
+  border-radius: 4px;
+  transition: 0.2s ease-in;
+  font-size: x-small;
+  font-weight: 500;
+}
+
+.updateProfileModal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  gap: 4rem;
+}
+
+.updateProfileBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.updateProfileBtn button {
+  padding: 0.6rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  background-color: transparent;
+  outline: none;
+  font-weight: 500;
+  border-radius: 5px;
+  color: #3399ff;
+  border: 1px solid #3399ff;
+}
+
+.updateProfileBtn button:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.updateProfileBtn button svg {
+  font-size: 1.1rem;
+}
+
+.updateProfileBtn button:last-child {
+  color: #f51a1a;
+  border: 1px solid #f51a1a;
+}
