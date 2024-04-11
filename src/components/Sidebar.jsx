@@ -134,7 +134,7 @@ function Sidebar() {
                   backgroundColor: "rgba(255,255,255,0.1)",
                 },
               }}
-              onClick={() => toast('hey')}
+              onClick={() => toast("hey")}
             >
               <TbProgressHelp
                 color={themeMode === "dark" ? "#fff" : "#3c4043"}
@@ -184,7 +184,10 @@ function Sidebar() {
         }}
       >
         <MenuItem
-          onClick={() => dispatch(toggleTheme())}
+          onClick={() => {
+            dispatch(toggleTheme());
+            handleClose();
+          }}
           sx={{
             color: themeMode === "dark" ? "#fff" : "#000",
             fontSize: "0.9rem",

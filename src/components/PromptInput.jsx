@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { IconButton, Tooltip, Zoom } from "@mui/material";
+import { Tooltip, Zoom } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import TermsAndConditions from "./TermsAndConditions";
 import { AnimatePresence, motion } from "framer-motion";
 import { clearPromptValue } from "../redux/slices/promptSlice";
+import { IoSendSharp } from "react-icons/io5";
 
-function PromptInput() {
+function PromptInput({ handleSearchQuery }) {
   const { themeMode } = useSelector((state) => state.theme);
   const { promptValue } = useSelector((state) => state.prompt);
   const [openTermModal, setOpenTermModal] = useState(false);
@@ -21,8 +22,9 @@ function PromptInput() {
     };
   }, [promptValue]);
 
-  const handleSubmit = () => {
-    console.log(searchQuery);
+  const handleSubmit = async () => {
+    await handleSearchQuery(searchQuery);
+    setSearchQuery("");
   };
 
   const handleKeyDown = (e) => {
@@ -66,19 +68,21 @@ function PromptInput() {
             onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={handleKeyDown}
           />
-          <Tooltip
-            title="click or press enter"
-            TransitionComponent={Zoom}
-            onClick={handleSubmit}
-          >
-            <IconButton size="small">
-              <img
-                src="https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg"
-                alt="svgLogo"
-                width={"25px"}
-              />
-            </IconButton>
-          </Tooltip>
+          {searchQuery && (
+            <Tooltip
+              title="click or press enter"
+              TransitionComponent={Zoom}
+              onClick={handleSubmit}
+            >
+              <div
+                className={`${
+                  themeMode === "dark" ? "darkSendButton" : "lightSendButton"
+                }`}
+              >
+                <IoSendSharp />
+              </div>
+            </Tooltip>
+          )}
         </motion.div>
       </AnimatePresence>
       <span className="termAndConditions">
