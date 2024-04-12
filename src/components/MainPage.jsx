@@ -6,7 +6,8 @@ import PromptAnswer from "./PromptAnswer";
 import useGemini from "../customHooks/useGemini";
 
 function MainPage() {
-  const { userQueryData, geminiQuery, recentUserQuery } = useGemini();
+  const { userQueryData, geminiQuery, recentUserQuery, userQueryDataLoading } =
+    useGemini();
 
   const handleSearchQuery = async (userQuery) => {
     await geminiQuery(userQuery);
@@ -20,6 +21,7 @@ function MainPage() {
         <PromptAnswer
           userQueryData={userQueryData}
           recentUserQuery={recentUserQuery}
+          userQueryDataLoading={userQueryDataLoading}
         />
       )}
       <PromptInput handleSearchQuery={handleSearchQuery} />

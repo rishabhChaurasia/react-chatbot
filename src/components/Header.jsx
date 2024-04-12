@@ -263,13 +263,15 @@ function Header() {
             fontWeight: 500,
             fontSize: "1rem",
             fontFamily: "Google sans",
+            display: "flex",
+            alignItems: "center",
           }}
         >
           <ListItemIcon>
             <img
               src="https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg"
               alt="svg"
-              width={"25px"}
+              width={"20px"}
             />
           </ListItemIcon>
           Gemini

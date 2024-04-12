@@ -43,7 +43,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* gap: 10rem; */
   height: 100vh;
 }
 
@@ -227,11 +226,14 @@
 .promptContent img {
   transform: translate(-4px, -4px);
   position: absolute;
-  width: 32px;
+  width: 35px;
 }
 
 .promptContent p {
   margin-left: 3rem;
+  font-size: 1.1rem;
+  line-height: 28px;
+  font-weight: 400;
 }
 
 .promptQuery {
@@ -316,4 +318,12 @@
 .updateProfileBtn button:last-child {
   color: #f51a1a;
   border: 1px solid #f51a1a;
+}
+
+.chatLoader {
+  margin-left: 3rem;
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
 }
