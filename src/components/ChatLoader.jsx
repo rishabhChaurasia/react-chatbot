@@ -17,7 +17,8 @@ const ChatLoader = () => {
       <Slide direction="right" in={true} timeout={300}>
         <Skeleton
           height={"1.3rem"}
-          animation={"wave"}
+          width={'28rem'}
+          animation={"pulse"}
           sx={{
             background:
               "linear-gradient(90deg, rgba(138,118,211,1) -8%, rgba(177,171,171,1) 79%)",

@@ -9,36 +9,50 @@ import {
   MenuItem,
   Tooltip,
   Zoom,
-  Slide,
-  Snackbar,
+  Badge,
 } from "@mui/material";
-import { FaBars } from "react-icons/fa6";
+import { FaBars, FaBarsProgress } from "react-icons/fa6";
 import { IoMdAdd } from "react-icons/io";
-import { TbLogout, TbProgressHelp } from "react-icons/tb";
+import { TbProgressHelp } from "react-icons/tb";
 import { MdDarkMode, MdLightMode, MdOutlineSettings } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleTheme } from "../redux/slices/themeSlice";
-import { authUserLogout } from "../redux/slices/authSlice";
-import { toast } from "react-toastify";
+import CustomSwitch from "./CustomSwitch";
+import { helpMenu } from "../staticData";
+import {
+  BsFillChatLeftDotsFill,
+  BsShieldFillExclamation,
+} from "react-icons/bs";
+import { FaClipboardQuestion } from "react-icons/fa6";
+import { LuCalendarRange } from "react-icons/lu";
+import { PiWarningCircleBold } from "react-icons/pi";
 
 function Sidebar() {
   const [toggleMenu, setToggleMenu] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl2, setAnchorEl2] = useState(null);
   const { themeMode } = useSelector((state) => state.theme);
   const dispatch = useDispatch();
 
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
+  const openSettings = Boolean(anchorEl);
+  const handleOpenSettings = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+  const handleCloseSettings = () => {
     setAnchorEl(null);
   };
 
-  const handleLogout = () => {
-    dispatch(authUserLogout());
-    handleClose();
-    toast("Logged out successfully");
+  const toggleDarkMode = () => {
+    dispatch(toggleTheme());
+  };
+
+  const openHelpMenu = Boolean(anchorEl2);
+  const handleOpenHelpMenu = (event) => {
+    setAnchorEl2(event.currentTarget);
+  };
+
+  const handleCloseHelpMenu = () => {
+    setAnchorEl2(null);
   };
 
   return (
@@ -99,21 +113,15 @@ function Sidebar() {
             </IconButton>
           </Tooltip>
           {toggleMenu && (
-            <Grow
-              in={true}
-              timeout={1800}
-              style={{ transformOrigin: "0 0 0 0" }}
+            <p
+              style={{
+                color: themeMode === "dark" ? "#fff" : "#3c4043",
+                fontWeight: "700",
+                fontSize: "0.8rem",
+              }}
             >
-              <p
-                style={{
-                  color: themeMode === "dark" ? "#fff" : "#3c4043",
-                  fontWeight: "700",
-                  fontSize: "0.8rem",
-                }}
-              >
-                New Chat
-              </p>
-            </Grow>
+              New Chat
+            </p>
           )}
         </Box>
       </Box>
@@ -126,7 +134,19 @@ function Sidebar() {
           gap: 3,
         }}
       >
-        <Box>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
+            width: "70%",
+            borderRadius: "20px",
+            cursor: "pointer",
+            "&:hover": {
+              backgroundColor: "rgba(0, 0, 0, 0.1)",
+            },
+          }}
+        >
           <Tooltip title="Help" TransitionComponent={Zoom} placement="right">
             <IconButton
               sx={{
@@ -134,34 +154,72 @@ function Sidebar() {
                   backgroundColor: "rgba(255,255,255,0.1)",
                 },
               }}
-              onClick={() => toast("hey")}
+              onClick={handleOpenHelpMenu}
             >
-              <TbProgressHelp
-                color={themeMode === "dark" ? "#fff" : "#3c4043"}
-              />
+              <Badge variant="dot" color="error" invisible={anchorEl2}>
+                <TbProgressHelp
+                  color={themeMode === "dark" ? "#fff" : "#3c4043"}
+                />
+              </Badge>
             </IconButton>
           </Tooltip>
+          {toggleMenu && (
+            <p
+              style={{
+                color: themeMode === "dark" ? "#fff" : "#3c4043",
+                fontWeight: "500",
+                fontSize: "0.9rem",
+              }}
+            >
+              Help
+            </p>
+          )}
         </Box>
 
-        <Box>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
+            width: "70%",
+            borderRadius: "20px",
+            cursor: "pointer",
+            "&:hover": {
+              backgroundColor: "rgba(0, 0, 0, 0.1)",
+            },
+          }}
+        >
           <Tooltip
             title="Settings"
             TransitionComponent={Zoom}
             placement="right"
           >
             <IconButton
-              onClick={handleClick}
+              onClick={handleOpenSettings}
               sx={{
                 "&:hover": {
                   backgroundColor: "rgba(255,255,255,0.1)",
                 },
               }}
             >
-              <MdOutlineSettings
-                color={themeMode === "dark" ? "#fff" : "#3c4043"}
-              />
+              <Badge color="error" variant="dot" invisible={anchorEl}>
+                <MdOutlineSettings
+                  color={themeMode === "dark" ? "#fff" : "#3c4043"}
+                />
+              </Badge>
             </IconButton>
           </Tooltip>
+          {toggleMenu && (
+            <p
+              style={{
+                color: themeMode === "dark" ? "#fff" : "#3c4043",
+                fontWeight: "500",
+                fontSize: "0.9rem",
+              }}
+            >
+              Settings
+            </p>
+          )}
         </Box>
       </Box>
       <Menu
@@ -170,12 +228,12 @@ function Sidebar() {
           "aria-labelledby": "fade-button",
         }}
         anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
+        open={openSettings}
+        onClose={handleCloseSettings}
         TransitionComponent={Fade}
         anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
         PaperProps={{
-          elevation: 0,
+          elevation: 2,
           style: {
             backgroundColor: themeMode === "dark" ? "#38393f" : "#f0f4f9",
             color: "#fff",
@@ -184,44 +242,102 @@ function Sidebar() {
         }}
       >
         <MenuItem
-          onClick={() => {
-            dispatch(toggleTheme());
-            handleClose();
-          }}
           sx={{
             color: themeMode === "dark" ? "#fff" : "#000",
             fontSize: "0.9rem",
             fontWeight: 520,
+            display: "flex",
+            alignItems: "center",
+            gap: 4,
           }}
         >
-          <ListItemIcon>
+          <ListItemIcon
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
+              fontWeight: 450,
+              color: themeMode === "dark" ? "#ddd" : "#3c4043",
+            }}
+          >
             {themeMode === "dark" ? (
-              <MdDarkMode color="#fff" size={"1.2rem"} />
+              <MdDarkMode size={"1.4rem"} />
             ) : (
-              <MdLightMode
-                color={themeMode === "dark" ? "#fff" : "#3c4043"}
-                size={"1.2rem"}
-              />
+              <MdLightMode size={"1.4rem"} />
             )}
+            {themeMode === "dark" ? "Dark" : "Light"} Mode
           </ListItemIcon>
-          {themeMode === "dark" ? "Dark" : "Light"} Mode
-        </MenuItem>
-        <MenuItem
-          sx={{
-            color: themeMode === "dark" ? "#fff" : "#000",
-            fontSize: "0.9rem",
-            fontWeight: 520,
-          }}
-          onClick={handleLogout}
-        >
           <ListItemIcon>
-            <TbLogout
-              color={themeMode === "dark" ? "#fff" : "#3c4043"}
-              size={"1.2rem"}
-            />
+            <CustomSwitch onChange={toggleDarkMode} />
           </ListItemIcon>
-          Sign out
         </MenuItem>
+        <MenuItem>
+          <ListItemIcon
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
+              fontWeight: 450,
+              color: themeMode === "dark" ? "#ddd" : "#3c4043",
+            }}
+          >
+            <FaBarsProgress />
+            Real-time responses
+          </ListItemIcon>
+        </MenuItem>
+      </Menu>
+
+      <Menu
+        id="fade-menu"
+        MenuListProps={{
+          "aria-labelledby": "fade-button",
+        }}
+        anchorEl={anchorEl}
+        open={openHelpMenu}
+        onClose={handleCloseHelpMenu}
+        TransitionComponent={Fade}
+        anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
+        PaperProps={{
+          elevation: 2,
+          style: {
+            backgroundColor: themeMode === "dark" ? "#38393f" : "#f0f4f9",
+            color: "#fff",
+            transform: "translate(3.3rem, -4rem)",
+          },
+        }}
+      >
+        {helpMenu.map((val, index) => {
+          return (
+            <MenuItem key={index}>
+              <ListItemIcon
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  fontWeight: 450,
+                  fontSize: "1rem",
+                  color: themeMode === "dark" ? "#ddd" : "#3c4043",
+                }}
+              >
+                {(() => {
+                  switch (val.icon) {
+                    case "BsShieldFillExclamation":
+                      return <BsShieldFillExclamation size={"1.2rem"} />;
+                    case "LuCalendarRange":
+                      return <LuCalendarRange size={"1.2rem"} />;
+                    case "BsFillChatLeftDotsFill":
+                      return <BsFillChatLeftDotsFill size={"1.2rem"} />;
+                    case "FaClipboardQuestion":
+                      return <FaClipboardQuestion size={"1.2rem"} />;
+                    case "PiWarningCircle":
+                      return <PiWarningCircleBold size={"1.2rem"} />;
+                  }
+                })()}
+                {val.name}
+              </ListItemIcon>
+            </MenuItem>
+          );
+        })}
       </Menu>
     </div>
   );

@@ -15,24 +15,23 @@ function PromptAnswer({
   let responseArray = userQueryData?.split("**");
   let formattedText;
 
-    for (let index = 0; index < responseArray?.length; index++) {
-      if (index === 0 || index % 2 !== 1) {
-        formattedText += responseArray[index];
-      } else {
-        formattedText += `<b>${responseArray[index]}</b>`;
-      }
-    }
+  // for (let index = 0; index < responseArray?.length; index++) {
+  //   if ( index % 2 !== 1) {
+  //     formattedText += responseArray[index];
+  //   } else {
+  //     formattedText += `<b>${responseArray[index]}</b>`;
+  //   }
+  // }
 
   useEffect(() => {
     const simulateTyping = async () => {
-      for (let i = 0; i < formattedText?.length; i++) {
+      for (let i = 0; i < userQueryData?.length; i++) {
         await new Promise((resolve) => setTimeout(resolve, typingSpeed));
-        setTypingEffect(formattedText?.substring(0, i + 1));
+        setTypingEffect(userQueryData?.substring(0, i + 1));
       }
     };
-
     simulateTyping();
-  }, [formattedText, typingSpeed]);
+  }, [userQueryData, typingSpeed]);
 
   return (
     <div className="promptAnswer">

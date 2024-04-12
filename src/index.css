@@ -13,7 +13,6 @@
 .sidebar {
   width: 4.25rem;
   height: 100vh;
-  transition: 0.5s;
 }
 
 .sidebar.active {
