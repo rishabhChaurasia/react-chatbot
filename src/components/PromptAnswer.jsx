@@ -11,27 +11,26 @@ function PromptAnswer({
 }) {
   const { authUser } = useSelector((state) => state.auth);
   const [typingEffect, setTypingEffect] = useState("");
-  let typingSpeed = 6;
+  let typingSpeed = 5;
   let responseArray = userQueryData?.split("**");
-  let formattedText;
 
-  // for (let index = 0; index < responseArray?.length; index++) {
-  //   if ( index % 2 !== 1) {
-  //     formattedText += responseArray[index];
-  //   } else {
-  //     formattedText += `<b>${responseArray[index]}</b>`;
-  //   }
-  // }
+  const formattedText = responseArray
+    ?.map((item, index) => {
+      return index % 2 !== 1 ? item : `<b>${item}</b>`;
+    })
+    .join("");
+
+  let finalResponseText = formattedText?.split("*").join("</br>");
 
   useEffect(() => {
     const simulateTyping = async () => {
-      for (let i = 0; i < userQueryData?.length; i++) {
+      for (let i = 0; i < finalResponseText?.length; i++) {
         await new Promise((resolve) => setTimeout(resolve, typingSpeed));
-        setTypingEffect(userQueryData?.substring(0, i + 1));
+        setTypingEffect(finalResponseText?.substring(0, i + 1));
       }
     };
     simulateTyping();
-  }, [userQueryData, typingSpeed]);
+  }, [finalResponseText, typingSpeed]);
 
   return (
     <div className="promptAnswer">

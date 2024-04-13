@@ -14,7 +14,12 @@ import {
 import { FaBars, FaBarsProgress } from "react-icons/fa6";
 import { IoMdAdd } from "react-icons/io";
 import { TbProgressHelp } from "react-icons/tb";
-import { MdDarkMode, MdLightMode, MdOutlineSettings } from "react-icons/md";
+import {
+  MdDarkMode,
+  MdLightMode,
+  MdOutlineChatBubbleOutline,
+  MdOutlineSettings,
+} from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleTheme } from "../redux/slices/themeSlice";
 import CustomSwitch from "./CustomSwitch";
@@ -26,8 +31,12 @@ import {
 import { FaClipboardQuestion } from "react-icons/fa6";
 import { LuCalendarRange } from "react-icons/lu";
 import { PiWarningCircleBold } from "react-icons/pi";
+import {
+  clearRecentUserQuery,
+  clearUserQuery,
+} from "../redux/slices/userQuerySlice";
 
-function Sidebar() {
+function Sidebar({ prevUserQuery, getRecentPrompt }) {
   const [toggleMenu, setToggleMenu] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [anchorEl2, setAnchorEl2] = useState(null);
@@ -98,11 +107,15 @@ function Sidebar() {
             width: "55%",
             borderRadius: "20px",
           }}
+          onClick={() => {
+            dispatch(clearUserQuery());
+            dispatch(clearRecentUserQuery());
+          }}
         >
           <Tooltip title="New chat" TransitionComponent={Zoom}>
             <IconButton
               sx={{
-                background: !toggleMenu ? "rgba(0,0,0,0.04)" : "",
+                backgroundColor: toggleMenu ? "" : "rgba(255,255,255,0.1)",
                 borderRadius: "50%",
               }}
             >
@@ -125,13 +138,47 @@ function Sidebar() {
           )}
         </Box>
       </Box>
+      {toggleMenu && (
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            padding: "0.8rem 0",
+            transform: "translateX(1.4rem)",
+            gap: 2,
+            width: "85%",
+          }}
+        >
+          <h5 style={{ fontSize: "0.8rem" }}>Recent</h5>
+          <div className="recentHistoryChat">
+            {prevUserQuery?.map((val, index) => {
+              const maxLengthPrevUserQuery = val
+                ?.substring(0, 12)
+                .concat("...");
+
+              return (
+                <div
+                  className="recentHistory"
+                  key={index}
+                  onClick={() => getRecentPrompt(val)}
+                >
+                  <MdOutlineChatBubbleOutline /> <p>{maxLengthPrevUserQuery}</p>
+                </div>
+              );
+            })}
+          </div>
+        </Box>
+      )}
 
       <Box
         sx={{
-          transform: "translate(15px , 25em)",
+          position: "absolute",
+          bottom: "1.3rem",
+          left: "0.7rem",
           display: "flex",
           flexDirection: "column",
           gap: 3,
+          width: "90%",
         }}
       >
         <Box
@@ -143,18 +190,18 @@ function Sidebar() {
             borderRadius: "20px",
             cursor: "pointer",
             "&:hover": {
-              backgroundColor: "rgba(0, 0, 0, 0.1)",
+              backgroundColor: toggleMenu ? "rgba(0, 0, 0, 0.1)" : "",
             },
           }}
+          onClick={handleOpenHelpMenu}
         >
           <Tooltip title="Help" TransitionComponent={Zoom} placement="right">
             <IconButton
               sx={{
                 "&:hover": {
-                  backgroundColor: "rgba(255,255,255,0.1)",
+                  backgroundColor: toggleMenu ? "" : "rgba(255,255,255,0.1)",
                 },
               }}
-              onClick={handleOpenHelpMenu}
             >
               <Badge variant="dot" color="error" invisible={anchorEl2}>
                 <TbProgressHelp
@@ -185,9 +232,10 @@ function Sidebar() {
             borderRadius: "20px",
             cursor: "pointer",
             "&:hover": {
-              backgroundColor: "rgba(0, 0, 0, 0.1)",
+              backgroundColor: toggleMenu ? "rgba(0, 0, 0, 0.1)" : "",
             },
           }}
+          onClick={handleOpenSettings}
         >
           <Tooltip
             title="Settings"
@@ -195,10 +243,9 @@ function Sidebar() {
             placement="right"
           >
             <IconButton
-              onClick={handleOpenSettings}
               sx={{
                 "&:hover": {
-                  backgroundColor: "rgba(255,255,255,0.1)",
+                  backgroundColor: toggleMenu ? "" : "rgba(255,255,255,0.1)",
                 },
               }}
             >
@@ -237,7 +284,9 @@ function Sidebar() {
           style: {
             backgroundColor: themeMode === "dark" ? "#38393f" : "#f0f4f9",
             color: "#fff",
-            transform: "translate(3.3rem, -4rem)",
+            transform: toggleMenu
+              ? "translate(13.4rem, -0.8rem)"
+              : "translate(3.3rem, -0.8rem)",
           },
         }}
       >
@@ -302,7 +351,9 @@ function Sidebar() {
           style: {
             backgroundColor: themeMode === "dark" ? "#38393f" : "#f0f4f9",
             color: "#fff",
-            transform: "translate(3.3rem, -4rem)",
+            transform: toggleMenu
+              ? "translate(13.4rem, -5rem)"
+              : "translate(3.4rem, -5rem)",
           },
         }}
       >

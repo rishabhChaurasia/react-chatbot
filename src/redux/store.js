@@ -4,11 +4,13 @@ import storage from "redux-persist/lib/storage";
 import themeReducer from "./slices/themeSlice";
 import authReducer from "./slices/authSlice";
 import promptReducer from "./slices/promptSlice";
+import userQueryReducer from "./slices/userQuerySlice";
 
 const rootReducer = combineReducers({
   theme: themeReducer,
   auth: authReducer,
   prompt: promptReducer,
+  userQuery: userQueryReducer,
 });
 
 const persistConfig = {

@@ -1,16 +1,33 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "./Header";
 import Starter from "./Starter";
 import PromptInput from "./PromptInput";
 import PromptAnswer from "./PromptAnswer";
 import useGemini from "../customHooks/useGemini";
 
-function MainPage() {
-  const { userQueryData, geminiQuery, recentUserQuery, userQueryDataLoading } =
-    useGemini();
+function MainPage({ getPrevUserQuery, recentPrompt, setRecentPrompt }) {
+  const {
+    userQueryData,
+    geminiQuery,
+    recentUserQuery,
+    userQueryDataLoading,
+    prevUserQuery,
+  } = useGemini();
+
+  useEffect(() => {
+    const getRecentPrompt = async () => {
+      await geminiQuery(recentPrompt);
+      setRecentPrompt("");
+    };
+
+    if (recentPrompt) {
+      getRecentPrompt();
+    }
+  }, [recentPrompt]);
 
   const handleSearchQuery = async (userQuery) => {
     await geminiQuery(userQuery);
+    getPrevUserQuery(prevUserQuery);
   };
 
   return (

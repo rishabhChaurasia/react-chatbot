@@ -4,15 +4,24 @@ import {
   HarmBlockThreshold,
 } from "@google/generative-ai";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setRecentUserQuery,
+  setUserQuery,
+} from "../redux/slices/userQuerySlice";
 
 const MODEL_NAME = "gemini-1.0-pro";
 const API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
 
 const useGemini = () => {
-  const [userQueryData, setUserQueryData] = useState(null);
-  const [recentUserQuery, setRecentUserQuery] = useState("");
   const [userQueryDataLoading, setUserQueryDataLoading] = useState(false);
-  // const [prevUserQuery, setPrevUserQuery] = useState(null);
+  const [prevUserQuery, setPrevUserQuery] = useState([]);
+
+  const { userQueryData, recentUserQuery } = useSelector(
+    (state) => state.userQuery
+  );
+
+  const dispatch = useDispatch();
 
   const geminiQuery = async (userQuery) => {
     setUserQueryDataLoading(true);
@@ -52,18 +61,25 @@ const useGemini = () => {
         history: [],
       });
 
-      setRecentUserQuery(userQuery);
+      dispatch(setRecentUserQuery(userQuery));
+      setPrevUserQuery((prev) => [...prev, userQuery]);
       const result = await chat.sendMessage(userQuery);
       const response = result.response;
       const data = response.text();
-      setUserQueryData(data);
+      dispatch(setUserQuery(data));
       setUserQueryDataLoading(false);
     } catch (error) {
       console.log(error.message);
       setUserQueryDataLoading(false);
     }
   };
-  return { userQueryData, geminiQuery, recentUserQuery, userQueryDataLoading };
+  return {
+    userQueryData,
+    geminiQuery,
+    recentUserQuery,
+    userQueryDataLoading,
+    prevUserQuery,
+  };
 };
 
 export default useGemini;
