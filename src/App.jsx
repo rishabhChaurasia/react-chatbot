@@ -5,6 +5,7 @@ import GoogleAuth from "./components/GoogleAuth";
 import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ErrorPage from "./components/ErrorPage";
 
 function App() {
   const { authUser } = useSelector((state) => state.auth);
@@ -28,6 +29,7 @@ function App() {
           path="/auth"
           element={authUser ? <Navigate to={"/"} /> : <GoogleAuth />}
         />
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
       <ToastContainer
         position="bottom-left"

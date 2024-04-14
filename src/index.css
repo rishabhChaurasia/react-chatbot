@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Google+Sans:100,300,400,500,700,900,100i,300i,400i,500i,700i,900i%5D%5B2");
+@import url("https://fonts.googleapis.com/css2?family=Itim&display=swap");
 
 * {
   margin: 0;
@@ -360,4 +361,46 @@
 
 .recentHistory:hover {
   background-color: rgba(0, 0, 0, 0.1);
+}
+
+.errorPage {
+  height: 100vh;
+  background-color: #2b2c33;
+  background-image: url(./assets/stars.svg);
+  display: flex;
+  justify-content: space-between;
+}
+
+.errorPage img {
+  max-width: 28rem;
+}
+
+.errorPage .errorPageContent {
+  color: #d8d8d8;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  width: 20rem;
+}
+
+.errorPage .errorPageContent h1 {
+  font-size: 10rem;
+  font-family: "Itim", cursive;
+}
+
+.errorPage .errorPageContent p {
+  font-size: 1.5rem;
+  font-family: "Itim", cursive;
+}
+
+.errorPage .errorPageContent a {
+  text-decoration: none;
+  color: #edebeb;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1rem;
+  font-family: "Itim", cursive;
+  transform: translate(3.7rem, 3rem);
 }
