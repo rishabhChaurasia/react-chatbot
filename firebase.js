@@ -4,7 +4,7 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  apiKey: "AIzaSyD3QyVL57wt1MyHm-DlD7Mhzf6t6SNxp9M",
   authDomain: "react-chatbot-300ba.firebaseapp.com",
   projectId: "react-chatbot-300ba",
   storageBucket: "react-chatbot-300ba.appspot.com",

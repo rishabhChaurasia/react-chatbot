@@ -11,7 +11,7 @@ import {
 } from "../redux/slices/userQuerySlice";
 
 const MODEL_NAME = "gemini-1.0-pro";
-const API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
+const API_KEY = "AIzaSyDOQxfl5AQEu8KYY9zQNnxqrROLqyWV8i8";
 
 const useGemini = () => {
   const [userQueryDataLoading, setUserQueryDataLoading] = useState(false);
